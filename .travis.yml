@@ -6,17 +6,13 @@ sudo: required
 notifications:
   email: false
 
-addons:
-  apt:
-    sources:
-      - sourceline: "ppa:beineri/opt-qt-5.11.1-xenial"
-
-    packages:
-      - qt511-meta
-      - wget
-      - curl
+before_install:
+  - sudo add-apt-repository -y
+  - sudo apt update
+  - sudo apt dist-upgrade
 
 install:
+  - sudo apt install wget curl qt511-meta
   - wget https://cmake.org/files/v3.13/cmake-3.13.0-rc2-Linux-x86_64.sh
   - sudo sh cmake-3.13.0-rc2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir
 
