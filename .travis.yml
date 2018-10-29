@@ -1,0 +1,36 @@
+language: cpp
+compiler: gcc
+dist: xenial
+sudo: required
+
+notifications:
+  email: false
+
+addons:
+  apt:
+    sources:
+      - sourceline: "add-apt-repository ppa:beineri/opt-qt-5.11.1-xenial"
+
+    packages:
+      - qt511-meta
+      - wget
+      - curl
+
+install:
+  - wget https://cmake.org/files/v3.13/cmake-3.13.0-rc2-Linux-x86_64.sh
+  - sudo sh cmake-3.13.0-rc2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir
+
+script:
+  - cmake .
+  - make -j$(nproc)
+  - make -j$(nproc) package
+  - mv webdavclient-*.deb libwebdavclient.deb
+
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh libwebdavclient.deb
+
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)$/
