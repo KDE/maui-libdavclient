@@ -9,7 +9,7 @@ notifications:
 addons:
   apt:
     sources:
-      - sourceline: "add-apt-repository ppa:beineri/opt-qt-5.11.1-xenial"
+      - sourceline: "ppa:beineri/opt-qt-5.11.1-xenial"
 
     packages:
       - qt511-meta
