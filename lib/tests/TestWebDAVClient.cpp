@@ -93,6 +93,31 @@ class TestWebDAVClient : public QObject {
     this->app->exec();
   }
 
+  void testUpload() {
+    QString url = "/remote.php/webdav/";
+    QFile file("/home/anupam/libwebdav/lib/WebDAVClient.cpp");
+    file.open(QIODevice::ReadOnly);
+
+    WebDAVReply *reply = this->client->uploadTo(url, "tttt.cpp", &file);
+
+    connect(reply, &WebDAVReply::uploadFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nUpload Success"
+                 << "\nURL  :" << reply->url() << "\nSize :" << reply->size();
+      } else {
+        qDebug() << "ERROR(UPLOAD)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
   void cleanupTestCase() { delete this->app; }
 };
 

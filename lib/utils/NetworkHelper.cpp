@@ -16,21 +16,26 @@ NetworkHelper::NetworkHelper(QString host, QString username, QString password) {
 
 QNetworkReply* NetworkHelper::makeRequest(QString method, QString path,
                                           QMap<QString, QString> headers) {
-  QUrl url(this->host + "/" + path);
-  QNetworkRequest request(url);
-  QMapIterator<QString, QString> headersIterator(headers);
+  QNetworkRequest request(QUrl(this->host + "/" + path));
 
   this->setRequestAuthHeader(&request);
-
-  while (headersIterator.hasNext()) {
-    headersIterator.next();
-    request.setRawHeader(
-        QByteArray::fromStdString(headersIterator.key().toStdString()),
-        QByteArray::fromStdString(headersIterator.value().toStdString()));
-  }
+  this->setRequestHeaders(&request, headers);
 
   QNetworkReply* reply = this->networkManager->sendCustomRequest(
       request, QByteArray::fromStdString(method.toStdString()));
+
+  return reply;
+}
+
+QNetworkReply* NetworkHelper::makePutRequest(QString path,
+                                             QMap<QString, QString> headers,
+                                             QIODevice* file) {
+  QNetworkRequest request(QUrl(this->host + "/" + path));
+
+  this->setRequestAuthHeader(&request);
+  this->setRequestHeaders(&request, headers);
+
+  QNetworkReply* reply = this->networkManager->put(request, file);
 
   return reply;
 }
@@ -41,4 +46,16 @@ void NetworkHelper::setRequestAuthHeader(QNetworkRequest* request) {
   QString headerData = "Basic " + data;
 
   request->setRawHeader("Authorization", headerData.toLocal8Bit());
+}
+
+void NetworkHelper::setRequestHeaders(QNetworkRequest* request,
+                                      QMap<QString, QString> headers) {
+  QMapIterator<QString, QString> headersIterator(headers);
+
+  while (headersIterator.hasNext()) {
+    headersIterator.next();
+    request->setRawHeader(
+        QByteArray::fromStdString(headersIterator.key().toStdString()),
+        QByteArray::fromStdString(headersIterator.value().toStdString()));
+  }
 }

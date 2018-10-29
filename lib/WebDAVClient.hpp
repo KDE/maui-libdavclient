@@ -1,6 +1,7 @@
 #ifndef WEBDAVCLIENT_HPP
 #define WEBDAVCLIENT_HPP
 
+#include <QIODevice>
 #include <QList>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -25,7 +26,7 @@ class WebDAVClient : public QObject {
   WebDAVReply* downloadFrom(QString path);
   WebDAVReply* downloadFrom(QString path, qint64 startByte, qint64 endByte);
 
-  void uploadTo(QString path);
+  WebDAVReply* uploadTo(QString path, QString filename, QIODevice* file);
 
   ~WebDAVClient();
 

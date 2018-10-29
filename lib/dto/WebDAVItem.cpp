@@ -1,5 +1,6 @@
 #include <QDateTime>
 #include <QDebug>
+#include <QIODevice>
 #include <QString>
 #include <QTextStream>
 
@@ -30,8 +31,8 @@ WebDAVReply* WebDAVItem::download() {
   return this->webdavClient->downloadFrom(this->href);
 }
 
-void WebDAVItem::upload() {
-  // TODO: Implement Functionality
+WebDAVReply* WebDAVItem::upload(QString filename, QIODevice* file) {
+  return this->webdavClient->uploadTo(this->href, filename, file);
 }
 
 WebDAVReply* WebDAVItem::listDir() {

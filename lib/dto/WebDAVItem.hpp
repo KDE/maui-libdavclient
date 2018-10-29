@@ -2,6 +2,7 @@
 #define DTO_WEBDAVITEM_HPP
 
 #include <QDateTime>
+#include <QIODevice>
 #include <QString>
 
 class WebDAVClient;
@@ -18,7 +19,7 @@ class WebDAVItem {
 
   WebDAVReply* download();
   WebDAVReply* listDir();
-  void upload();
+  WebDAVReply* upload(QString filename, QIODevice* file);
 
   QString toString();
 

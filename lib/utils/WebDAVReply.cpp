@@ -19,6 +19,10 @@ void WebDAVReply::sendDownloadProgressResponseSignal(qint64 bytesReceived,
   emit downloadProgressResponse(bytesReceived, bytesTotal);
 }
 
+void WebDAVReply::sendUploadFinishedResponseSignal(QNetworkReply* uploadReply) {
+  emit uploadFinished(uploadReply);
+}
+
 void WebDAVReply::sendError(QNetworkReply::NetworkError err) {
   emit error(err);
 }

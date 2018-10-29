@@ -116,7 +116,26 @@ WebDAVReply* WebDAVClient::downloadFrom(QString path, qint64 startByte,
   return reply;
 }
 
-void WebDAVClient::uploadTo(QString path) {}
+WebDAVReply* WebDAVClient::uploadTo(QString path, QString filename,
+                                    QIODevice* file) {
+  WebDAVReply* reply = new WebDAVReply();
+  QMap<QString, QString> headers;
+  QNetworkReply* uploadReply;
+
+  uploadReply =
+      this->networkHelper->makePutRequest(path + "/" + filename, headers, file);
+
+  connect(uploadReply, &QNetworkReply::finished,
+          [=]() { reply->sendUploadFinishedResponseSignal(uploadReply); });
+
+  connect(uploadReply,
+          QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+          [=](QNetworkReply::NetworkError err) {
+            this->errorReplyHandler(reply, err);
+          });
+
+  return reply;
+}
 
 void WebDAVClient::errorReplyHandler(WebDAVReply* reply,
                                      QNetworkReply::NetworkError err) {
