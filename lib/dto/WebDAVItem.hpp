@@ -29,8 +29,6 @@ class WebDAVItem {
   QString getContentType();
   int getContentLength();
 
-  static WebDAVItem fromHref();
-
  private:
   WebDAVClient* webdavClient;
   QString href;

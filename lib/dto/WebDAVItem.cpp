@@ -20,9 +20,6 @@ WebDAVItem::WebDAVItem(WebDAVClient* webdavClient, QString href,
   this->contentType = contentType;
   this->contentLength = contentLength.toInt();
   this->flagIsCollection = isCollection;
-
-  //  qDebug() << href << creationDate << lastModified << displayName <<
-  //  contentLength << contentType << isCollection;
 }
 
 bool WebDAVItem::isCollection() { return this->flagIsCollection; }
