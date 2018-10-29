@@ -64,7 +64,3 @@ QString WebDAVItem::getDisplayName() { return this->displayName; }
 QString WebDAVItem::getContentType() { return this->contentType; }
 
 int WebDAVItem::getContentLength() { return this->contentLength; }
-
-WebDAVItem WebDAVItem::fromHref() {
-  // TODO: Implement Functionality
-}
