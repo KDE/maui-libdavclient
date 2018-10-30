@@ -12,11 +12,15 @@ before_install:
 
 install:
   - sudo apt-get -y install wget curl qt511base qt511declarative qt511xmlpatterns
+  - /opt/qt511/bin/qt511-env.sh
+  - export QT_SELECT=qt5
+  - sudo ldconfig -c /opt/qt511/lib/ /usr/lib/x86_64-linux-gnu/
+  - export PATH=$PATH:/opt/qt511/bin/
   - wget https://cmake.org/files/v3.13/cmake-3.13.0-rc2-Linux-x86_64.sh
   - sudo sh cmake-3.13.0-rc2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir
 
 script:
-  - cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_PREFIX_PATH="/opt/qt511/lib"
+  - cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_PREFIX_PATH="/opt/qt511"
   - make -j$(nproc)
   - make -j$(nproc) package
   - mv webdavclient-*.deb libwebdavclient.deb
