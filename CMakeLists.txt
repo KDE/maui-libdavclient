@@ -6,7 +6,7 @@ file(STRINGS ./VERSION PROJECT_VERSION)
 project(
     webdavclient
     VERSION ${PROJECT_VERSION}
-    DESCRIPTION "WebDAV Client Library"
+    DESCRIPTION "A WebDAV Client library to connect to WebDAV Servers built with QT"
 )
 
 # Set Flags
@@ -33,7 +33,7 @@ add_subdirectory(lib/tests)
 include(InstallRequiredSystemLibraries)
 
 set(CPACK_GENERATOR "DEB")
-set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Anupam Basak")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A WebDAV Client library to connect to WebDAV Servers built with QT")
 set(CPACK_PACKAGE_VENDOR "Anupam Basak")

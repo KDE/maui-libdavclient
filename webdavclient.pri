@@ -31,5 +31,3 @@ INCLUDEPATH += \
   $$PWD/lib \
   $$PWD/lib/utils \
   $$PWD/lib/dto
-
-DEFINES += WEBDAV
