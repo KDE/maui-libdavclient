@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.9)
 enable_testing()
 
+file(STRINGS ./VERSION PROJECT_VERSION)
+
 project(
     webdavclient
-    VERSION 0.1.0
+    VERSION ${PROJECT_VERSION}
     DESCRIPTION "WebDAV Client Library"
 )
 
