@@ -144,7 +144,7 @@ class TestWebDAVClient : public QObject {
   void testMoveDir() {
     WebDAVReply *reply = this->client->move(
         Environment::get("LIBWEBDAV_TEST_PATH") + "/tttt.cpp",
-        Environment::get("LIBWEBDAV_TEST_PATH") + "/TestFolder/tttt.cpp");
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/TestFolder/tttt.cpp", true);
 
     connect(reply, &WebDAVReply::moveFinished, [=](QNetworkReply *reply) {
       if (!reply->error()) {
