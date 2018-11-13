@@ -141,6 +141,29 @@ class TestWebDAVClient : public QObject {
     this->app->exec();
   }
 
+  void testMoveDir() {
+    WebDAVReply *reply = this->client->move(
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/tttt.cpp",
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/TestFolder/tttt.cpp");
+
+    connect(reply, &WebDAVReply::moveFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nItem Moved"
+                 << "\nURL  :" << reply->url();
+      } else {
+        qDebug() << "ERROR(MOVE DIR)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
   void cleanupTestCase() { delete this->app; }
 };
 

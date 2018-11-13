@@ -39,6 +39,10 @@ WebDAVReply* WebDAVItem::createDir(QString dirName) {
   return this->webdavClient->createDir(this->href, dirName);
 }
 
+WebDAVReply* WebDAVItem::move(QString destination, bool overwrite) {
+  return this->webdavClient->move(this->href, destination, overwrite);
+}
+
 WebDAVReply* WebDAVItem::listDir() {
   return this->webdavClient->listDir(this->href);
 }
