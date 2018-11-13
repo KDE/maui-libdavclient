@@ -20,6 +20,7 @@ class WebDAVReply : public QObject {
   void sendUploadFinishedResponseSignal(QNetworkReply* uploadReply);
   void sendDirCreatedResponseSignal(QNetworkReply* createDirReply);
   void sendMoveResponseSignal(QNetworkReply* moveReply);
+  void sendRemoveResponseSignal(QNetworkReply* removeReply);
   void sendError(QNetworkReply::NetworkError err);
 
  signals:
@@ -29,6 +30,7 @@ class WebDAVReply : public QObject {
   void uploadFinished(QNetworkReply* uploadReply);
   void createDirFinished(QNetworkReply* createDirReply);
   void moveFinished(QNetworkReply* moveReply);
+  void removeFinished(QNetworkReply* removeReply);
   void error(QNetworkReply::NetworkError err);
 };
 

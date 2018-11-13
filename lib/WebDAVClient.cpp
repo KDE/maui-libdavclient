@@ -181,6 +181,25 @@ WebDAVReply* WebDAVClient::move(QString source, QString destination,
   return reply;
 }
 
+WebDAVReply* WebDAVClient::remove(QString path) {
+  WebDAVReply* reply = new WebDAVReply();
+  QMap<QString, QString> headers;
+  QNetworkReply* removeReply;
+
+  removeReply = this->networkHelper->makeRequest("DELETE", path, headers);
+
+  connect(removeReply, &QNetworkReply::finished,
+          [=]() { reply->sendRemoveResponseSignal(removeReply); });
+
+  connect(removeReply,
+          QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+          [=](QNetworkReply::NetworkError err) {
+            this->errorReplyHandler(reply, err);
+          });
+
+  return reply;
+}
+
 void WebDAVClient::errorReplyHandler(WebDAVReply* reply,
                                      QNetworkReply::NetworkError err) {
   reply->sendError(err);

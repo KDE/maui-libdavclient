@@ -31,6 +31,10 @@ void WebDAVReply::sendMoveResponseSignal(QNetworkReply* moveReply) {
   emit moveFinished(moveReply);
 }
 
+void WebDAVReply::sendRemoveResponseSignal(QNetworkReply* removeReply) {
+  emit removeFinished(removeReply);
+}
+
 void WebDAVReply::sendError(QNetworkReply::NetworkError err) {
   emit error(err);
 }

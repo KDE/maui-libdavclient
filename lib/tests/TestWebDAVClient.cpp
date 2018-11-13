@@ -142,9 +142,11 @@ class TestWebDAVClient : public QObject {
   }
 
   void testMoveDir() {
+    QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
     WebDAVReply *reply = this->client->move(
         Environment::get("LIBWEBDAV_TEST_PATH") + "/tttt.cpp",
-        Environment::get("LIBWEBDAV_TEST_PATH") + "/TestFolder/tttt.cpp", true);
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/" + dirName + "/tttt.cpp",
+        true);
 
     connect(reply, &WebDAVReply::moveFinished, [=](QNetworkReply *reply) {
       if (!reply->error()) {
@@ -152,6 +154,53 @@ class TestWebDAVClient : public QObject {
                  << "\nURL  :" << reply->url();
       } else {
         qDebug() << "ERROR(MOVE DIR)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
+  void testRemove() {
+    QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
+
+    WebDAVReply *reply = this->client->remove(
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/" + dirName + "/tttt.cpp");
+
+    connect(reply, &WebDAVReply::removeFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nItem Removed"
+                 << "\nURL  :" << reply->url();
+      } else {
+        qDebug() << "ERROR(REMOVE File)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
+  void testRemoveDir() {
+    QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
+    WebDAVReply *reply = this->client->remove(
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/" + dirName);
+
+    connect(reply, &WebDAVReply::removeFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nItem Removed"
+                 << "\nURL  :" << reply->url();
+      } else {
+        qDebug() << "ERROR(REMOVE Dir)" << reply->error();
       }
       QCoreApplication::exit(0);
     });

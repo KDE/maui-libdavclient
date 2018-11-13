@@ -33,6 +33,8 @@ class WebDAVClient : public QObject {
   WebDAVReply* move(QString source, QString destination,
                     bool overwrite = false);
 
+  WebDAVReply* remove(QString path);
+
   ~WebDAVClient();
 
  private:

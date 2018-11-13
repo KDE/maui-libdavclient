@@ -43,6 +43,10 @@ WebDAVReply* WebDAVItem::move(QString destination, bool overwrite) {
   return this->webdavClient->move(this->href, destination, overwrite);
 }
 
+WebDAVReply* WebDAVItem::remove() {
+  return this->webdavClient->remove(this->href);
+}
+
 WebDAVReply* WebDAVItem::listDir() {
   return this->webdavClient->listDir(this->href);
 }
