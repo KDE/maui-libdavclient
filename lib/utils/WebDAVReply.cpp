@@ -27,6 +27,10 @@ void WebDAVReply::sendDirCreatedResponseSignal(QNetworkReply* createDirReply) {
   emit createDirFinished(createDirReply);
 }
 
+void WebDAVReply::sendCopyResponseSignal(QNetworkReply* copyReply) {
+  emit copyFinished(copyReply);
+}
+
 void WebDAVReply::sendMoveResponseSignal(QNetworkReply* moveReply) {
   emit moveFinished(moveReply);
 }

@@ -141,6 +141,31 @@ class TestWebDAVClient : public QObject {
     this->app->exec();
   }
 
+  void testCopyDir() {
+    QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
+    WebDAVReply *reply = this->client->copy(
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/tttt.cpp",
+        Environment::get("LIBWEBDAV_TEST_PATH") + "/" + dirName +
+            "/tttt-copy.cpp");
+
+    connect(reply, &WebDAVReply::copyFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nItem Copied"
+                 << "\nURL  :" << reply->url();
+      } else {
+        qDebug() << "ERROR(COPY)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
   void testMoveDir() {
     QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
     WebDAVReply *reply = this->client->move(

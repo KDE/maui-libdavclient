@@ -30,6 +30,8 @@ class WebDAVClient : public QObject {
 
   WebDAVReply* createDir(QString path, QString dirName);
 
+  WebDAVReply* copy(QString source, QString destination);
+
   WebDAVReply* move(QString source, QString destination,
                     bool overwrite = false);
 

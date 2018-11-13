@@ -157,6 +157,27 @@ WebDAVReply* WebDAVClient::createDir(QString path, QString dirName) {
   return reply;
 }
 
+WebDAVReply* WebDAVClient::copy(QString source, QString destination) {
+  WebDAVReply* reply = new WebDAVReply();
+  QMap<QString, QString> headers;
+  QNetworkReply* copyReply;
+
+  headers.insert("Destination", destination);
+
+  copyReply = this->networkHelper->makeRequest("COPY", source, headers);
+
+  connect(copyReply, &QNetworkReply::finished,
+          [=]() { reply->sendCopyResponseSignal(copyReply); });
+
+  connect(copyReply,
+          QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+          [=](QNetworkReply::NetworkError err) {
+            this->errorReplyHandler(reply, err);
+          });
+
+  return reply;
+}
+
 WebDAVReply* WebDAVClient::move(QString source, QString destination,
                                 bool overwrite) {
   WebDAVReply* reply = new WebDAVReply();
