@@ -137,6 +137,26 @@ WebDAVReply* WebDAVClient::uploadTo(QString path, QString filename,
   return reply;
 }
 
+WebDAVReply* WebDAVClient::createDir(QString path, QString dirName) {
+  WebDAVReply* reply = new WebDAVReply();
+  QMap<QString, QString> headers;
+  QNetworkReply* createDirReply;
+
+  createDirReply =
+      this->networkHelper->makeRequest("MKCOL", path + "/" + dirName, headers);
+
+  connect(createDirReply, &QNetworkReply::finished,
+          [=]() { reply->sendDirCreatedResponseSignal(createDirReply); });
+
+  connect(createDirReply,
+          QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+          [=](QNetworkReply::NetworkError err) {
+            this->errorReplyHandler(reply, err);
+          });
+
+  return reply;
+}
+
 void WebDAVClient::errorReplyHandler(WebDAVReply* reply,
                                      QNetworkReply::NetworkError err) {
   reply->sendError(err);

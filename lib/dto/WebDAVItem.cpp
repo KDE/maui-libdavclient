@@ -35,6 +35,10 @@ WebDAVReply* WebDAVItem::upload(QString filename, QIODevice* file) {
   return this->webdavClient->uploadTo(this->href, filename, file);
 }
 
+WebDAVReply* WebDAVItem::createDir(QString dirName) {
+  return this->webdavClient->createDir(this->href, dirName);
+}
+
 WebDAVReply* WebDAVItem::listDir() {
   return this->webdavClient->listDir(this->href);
 }

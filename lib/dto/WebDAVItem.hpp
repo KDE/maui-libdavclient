@@ -20,6 +20,7 @@ class WebDAVItem {
   WebDAVReply* download();
   WebDAVReply* listDir();
   WebDAVReply* upload(QString filename, QIODevice* file);
+  WebDAVReply* createDir(QString dirName);
 
   QString toString();
 

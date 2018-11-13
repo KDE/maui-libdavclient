@@ -23,6 +23,10 @@ void WebDAVReply::sendUploadFinishedResponseSignal(QNetworkReply* uploadReply) {
   emit uploadFinished(uploadReply);
 }
 
+void WebDAVReply::sendDirCreatedResponseSignal(QNetworkReply* createDirReply) {
+  emit createDirFinished(createDirReply);
+}
+
 void WebDAVReply::sendError(QNetworkReply::NetworkError err) {
   emit error(err);
 }

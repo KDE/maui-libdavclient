@@ -94,7 +94,7 @@ class TestWebDAVClient : public QObject {
   }
 
   void testUpload() {
-    QString url = "/remote.php/webdav/";
+    QString url = Environment::get("LIBWEBDAV_TEST_PATH");
     QFile file("/home/anupam/libwebdav/lib/WebDAVClient.cpp");
     file.open(QIODevice::ReadOnly);
 
@@ -106,6 +106,29 @@ class TestWebDAVClient : public QObject {
                  << "\nURL  :" << reply->url() << "\nSize :" << reply->size();
       } else {
         qDebug() << "ERROR(UPLOAD)" << reply->error();
+      }
+      QCoreApplication::exit(0);
+    });
+
+    connect(reply, &WebDAVReply::error, [=](QNetworkReply::NetworkError err) {
+      qDebug() << "ERROR" << err;
+      QCoreApplication::exit(1);
+    });
+
+    this->app->exec();
+  }
+
+  void testCreateDir() {
+    QString dirName = QDate::currentDate().toString(Qt::DateFormat::ISODate);
+    WebDAVReply *reply = this->client->createDir(
+        Environment::get("LIBWEBDAV_TEST_PATH"), dirName);
+
+    connect(reply, &WebDAVReply::createDirFinished, [=](QNetworkReply *reply) {
+      if (!reply->error()) {
+        qDebug() << "\nDir Created"
+                 << "\nURL  :" << reply->url();
+      } else {
+        qDebug() << "ERROR(CREATE DIR)" << reply->error();
       }
       QCoreApplication::exit(0);
     });

@@ -28,6 +28,8 @@ class WebDAVClient : public QObject {
 
   WebDAVReply* uploadTo(QString path, QString filename, QIODevice* file);
 
+  WebDAVReply* createDir(QString path, QString dirName);
+
   ~WebDAVClient();
 
  private:
