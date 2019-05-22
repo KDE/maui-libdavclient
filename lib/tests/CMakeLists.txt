@@ -7,34 +7,15 @@ find_package(
     Network
     Xml
 )
+find_package(libdavclient REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(
-    CPP_SOURCES
-
-    ../WebDAVClient.cpp
-
-    ../dto/WebDAVItem.cpp
-
-    ../utils/NetworkHelper.cpp
-    ../utils/WebDAVReply.cpp    
-    ../utils/XMLHelper.cpp
-    ../utils/Environment.cpp
-)
-
-set(
-  TEST_SOURCES
-
-  TestWebDAVClient.cpp
-)
-
 add_executable(
   ${PROJECT_NAME}_test
 
-  ${TEST_SOURCES}
-  ${CPP_SOURCES}
+  TestLibDAVClient.cpp
 )
 
 target_link_libraries(
@@ -43,6 +24,8 @@ target_link_libraries(
     Qt5::Test
     Qt5::Network
     Qt5::Xml
+
+    libdavclient.so
 )
 
 add_test(${PROJECT_NAME}_test ${PROJECT_NAME}_test)

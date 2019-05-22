@@ -1,9 +1,3 @@
-#include <QByteArray>
-#include <QMap>
-#include <QNetworkAccessManager>
-#include <QString>
-#include <QUrl>
-
 #include "NetworkHelper.hpp"
 
 NetworkHelper::NetworkHelper(QString host, QString username, QString password) {
@@ -39,6 +33,49 @@ QNetworkReply* NetworkHelper::makePutRequest(QString path,
 
   return reply;
 }
+
+// QNetworkReply* NetworkHelper::makeRequest(QString method,
+//                                          QMap<QString, QString> headers) {
+//  return this->makeRequest(method, QUrl(this->host), headers, "");
+//}
+
+// QNetworkReply* NetworkHelper::makeRequest(QString method,
+//                                          QMap<QString, QString> headers,
+//                                          QString body) {
+//  return this->makeRequest(method, QUrl(this->host), headers, body);
+//}
+
+// QNetworkReply* NetworkHelper::makeRequest(QString method, QUrl path,
+//                                          QMap<QString, QString> headers,
+//                                          QString body) {
+//  QUrl url(this->host);
+//  QString port = url.port() != -1 ? ":" + QString::number(url.port()) : "";
+//  QUrl requestUrl(url.scheme() + "://" + url.host() + port + "/" +
+//  path.path());
+
+//  QNetworkRequest request(requestUrl);
+
+//  this->setRequestAuthHeader(&request);
+//  this->setRequestHeaders(&request, headers);
+
+//  QNetworkReply* reply = this->networkManager->sendCustomRequest(
+//      request, QByteArray::fromStdString(method.toStdString()),
+//      QByteArray::fromStdString(body.toStdString()));
+
+//  return reply;
+//}
+
+// QNetworkReply* NetworkHelper::makePutRequest(QMap<QString, QString> headers,
+//                                             QIODevice* file) {
+//  QNetworkRequest request(QUrl(this->host));
+
+//  this->setRequestAuthHeader(&request);
+//  this->setRequestHeaders(&request, headers);
+
+//  QNetworkReply* reply = this->networkManager->put(request, file);
+
+//  return reply;
+//}
 
 void NetworkHelper::setRequestAuthHeader(QNetworkRequest* request) {
   QString authData = this->username + ":" + this->password;

@@ -28,6 +28,13 @@ class NetworkHelper : public QObject {
                              QMap<QString, QString> headers);
   QNetworkReply* makePutRequest(QString path, QMap<QString, QString> headers,
                                 QIODevice* file);
+  QNetworkReply* makeRequest(QString method, QMap<QString, QString> headers);
+  QNetworkReply* makeRequest(QString method, QMap<QString, QString> headers,
+                             QString body);
+  QNetworkReply* makeRequest(QString method, QUrl path,
+                             QMap<QString, QString> headers, QString body);
+  QNetworkReply* makePutRequest(QMap<QString, QString> headers,
+                                QIODevice* file);
 };
 
 #endif

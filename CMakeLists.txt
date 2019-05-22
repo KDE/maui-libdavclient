@@ -1,12 +1,12 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.10)
 enable_testing()
 
 file(STRINGS ./VERSION PROJECT_VERSION)
 
 project(
-    webdavclient
+    davclient
     VERSION ${PROJECT_VERSION}
-    DESCRIPTION "A WebDAV Client library to connect to WebDAV Servers built with QT"
+    DESCRIPTION "A DAV Client library to connect to DAV Servers(CardDAV, CalDAV, WebDAV) built with QT"
 )
 
 # Set Flags
@@ -35,7 +35,7 @@ include(InstallRequiredSystemLibraries)
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Anupam Basak")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A WebDAV Client library to connect to WebDAV Servers built with QT")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A DAV Client library to connect to DAV Servers(CardDAV, CalDAV, WebDAV) built with QT")
 set(CPACK_PACKAGE_VENDOR "Anupam Basak")
 set(CPACK_PACKAGE_CONTACT "Anupam Basak <anupam.basak27@gmail.com>")
 #set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")

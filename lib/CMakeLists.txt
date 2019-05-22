@@ -22,11 +22,15 @@ set(
     CPP_SOURCES
   
     WebDAVClient.cpp
+    CardDAV.cpp
 
     dto/WebDAVItem.cpp
+    dto/Contact.cpp
+    dto/CardDAVResponseItem.cpp
 
     utils/NetworkHelper.cpp
     utils/WebDAVReply.cpp
+    utils/CardDAVReply.cpp
     utils/XMLHelper.cpp
     utils/Environment.cpp
 )
@@ -50,15 +54,28 @@ target_link_libraries(
 
 # Set Flags for Library
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(${PROJECT_NAME} PROPERTIES
-  PUBLIC_HEADER "WebDAVClient.hpp;dto/WebDAVItem.hpp;utils/WebDAVReply.hpp"
-)
+#set_target_properties(${PROJECT_NAME} PROPERTIES
+#  PUBLIC_HEADER "WebDAVClient.hpp;CardDAV.hpp;dto/WebDAVItem.hpp;dto/CardDAVResponseItem.hpp;dto/Contact.hpp;utils/WebDAVReply.hpp;utils/CardDAVReply.hpp;utils/Environment.hpp"
+#)
 ###
 
 # Set Installables
 install(
-    TARGETS ${PROJECT_NAME}
+    TARGETS davclient
+    EXPORT libdavclientConfig
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${HEADERS_INSTALL_DIR}
+)
+export(
+    EXPORT libdavclientConfig
+    FILE libdavclientConfig.cmake
+)
+install(
+    EXPORT libdavclientConfig
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libdavclient"
+)
+install(
+    DIRECTORY ${CMAKE_SOURCE_DIR}/lib/
+    DESTINATION ${HEADERS_INSTALL_DIR}
+    FILES_MATCHING PATTERN "*.h*"
 )
 ###

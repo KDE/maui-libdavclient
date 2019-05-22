@@ -1,5 +1,3 @@
-#include <QString>
-
 #include "Environment.hpp"
 
 QString Environment::get(QString key) {
