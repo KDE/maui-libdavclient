@@ -10,22 +10,22 @@
 #include <QSslError>
 #include <string>
 
-#include "WebDAVClient.hpp"
+#include "WebDAV.hpp"
 #include "utils/NetworkHelper.hpp"
 #include "utils/WebDAVReply.hpp"
 
-WebDAVClient::WebDAVClient(QString host, QString username, QString password) {
+WebDAV::WebDAV(QString host, QString username, QString password) {
   this->networkHelper = new NetworkHelper(host, username, password);
   this->xmlHelper = new XMLHelper();
 
   // TODO: Check for Timeout error in case of wrong host
 }
 
-WebDAVReply* WebDAVClient::listDir(QString path) {
+WebDAVReply* WebDAV::listDir(QString path) {
   return this->listDir(path, ListDepthEnum::Infinity);
 }
 
-WebDAVReply* WebDAVClient::listDir(QString path, ListDepthEnum depth) {
+WebDAVReply* WebDAV::listDir(QString path, ListDepthEnum depth) {
   WebDAVReply* reply = new WebDAVReply();
   QString depthVal;
   QMap<QString, QString> headers;
@@ -71,12 +71,12 @@ WebDAVReply* WebDAVClient::listDir(QString path, ListDepthEnum depth) {
   return reply;
 }
 
-WebDAVReply* WebDAVClient::downloadFrom(QString path) {
+WebDAVReply* WebDAV::downloadFrom(QString path) {
   return this->downloadFrom(path, 0, -1);
 }
 
-WebDAVReply* WebDAVClient::downloadFrom(QString path, qint64 startByte,
-                                        qint64 endByte) {
+WebDAVReply* WebDAV::downloadFrom(QString path, qint64 startByte,
+                                  qint64 endByte) {
   WebDAVReply* reply = new WebDAVReply();
   QString rangeVal;
   QTextStream stream(&rangeVal);
@@ -116,8 +116,7 @@ WebDAVReply* WebDAVClient::downloadFrom(QString path, qint64 startByte,
   return reply;
 }
 
-WebDAVReply* WebDAVClient::uploadTo(QString path, QString filename,
-                                    QIODevice* file) {
+WebDAVReply* WebDAV::uploadTo(QString path, QString filename, QIODevice* file) {
   WebDAVReply* reply = new WebDAVReply();
   QMap<QString, QString> headers;
   QNetworkReply* uploadReply;
@@ -137,7 +136,7 @@ WebDAVReply* WebDAVClient::uploadTo(QString path, QString filename,
   return reply;
 }
 
-WebDAVReply* WebDAVClient::createDir(QString path, QString dirName) {
+WebDAVReply* WebDAV::createDir(QString path, QString dirName) {
   WebDAVReply* reply = new WebDAVReply();
   QMap<QString, QString> headers;
   QNetworkReply* createDirReply;
@@ -157,7 +156,7 @@ WebDAVReply* WebDAVClient::createDir(QString path, QString dirName) {
   return reply;
 }
 
-WebDAVReply* WebDAVClient::copy(QString source, QString destination) {
+WebDAVReply* WebDAV::copy(QString source, QString destination) {
   WebDAVReply* reply = new WebDAVReply();
   QMap<QString, QString> headers;
   QNetworkReply* copyReply;
@@ -178,8 +177,7 @@ WebDAVReply* WebDAVClient::copy(QString source, QString destination) {
   return reply;
 }
 
-WebDAVReply* WebDAVClient::move(QString source, QString destination,
-                                bool overwrite) {
+WebDAVReply* WebDAV::move(QString source, QString destination, bool overwrite) {
   WebDAVReply* reply = new WebDAVReply();
   QMap<QString, QString> headers;
   QNetworkReply* moveReply;
@@ -202,7 +200,7 @@ WebDAVReply* WebDAVClient::move(QString source, QString destination,
   return reply;
 }
 
-WebDAVReply* WebDAVClient::remove(QString path) {
+WebDAVReply* WebDAV::remove(QString path) {
   WebDAVReply* reply = new WebDAVReply();
   QMap<QString, QString> headers;
   QNetworkReply* removeReply;
@@ -221,12 +219,12 @@ WebDAVReply* WebDAVClient::remove(QString path) {
   return reply;
 }
 
-void WebDAVClient::errorReplyHandler(WebDAVReply* reply,
-                                     QNetworkReply::NetworkError err) {
+void WebDAV::errorReplyHandler(WebDAVReply* reply,
+                               QNetworkReply::NetworkError err) {
   reply->sendError(err);
 }
 
-WebDAVClient::~WebDAVClient() {
+WebDAV::~WebDAV() {
   this->networkHelper->deleteLater();
   delete this->xmlHelper;
 }

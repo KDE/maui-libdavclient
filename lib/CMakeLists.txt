@@ -21,7 +21,7 @@ set(HEADERS_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME})
 set(
     CPP_SOURCES
   
-    WebDAVClient.cpp
+    WebDAV.cpp
     CardDAV.cpp
 
     dto/WebDAVItem.cpp

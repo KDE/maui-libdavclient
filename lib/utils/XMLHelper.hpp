@@ -7,12 +7,11 @@
 #include "../dto/CardDAVResponseItem.hpp"
 #include "../dto/WebDAVItem.hpp"
 
-class WebDAVClient;
+class WebDAV;
 
 class XMLHelper {
  public:
-  QList<WebDAVItem> parseListDirResponse(WebDAVClient *webdavClient,
-                                         QByteArray xml);
+  QList<WebDAVItem> parseListDirResponse(WebDAV *webdavClient, QByteArray xml);
   QList<CardDAVResponseItem *> parseCardDAVMultiStatusResponse(
       QString responseXml);
 };

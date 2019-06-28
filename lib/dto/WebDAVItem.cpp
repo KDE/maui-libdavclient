@@ -4,14 +4,14 @@
 #include <QString>
 #include <QTextStream>
 
-#include "../WebDAVClient.hpp"
+#include "../WebDAV.hpp"
 #include "../utils/WebDAVReply.hpp"
 #include "WebDAVItem.hpp"
 
-WebDAVItem::WebDAVItem(WebDAVClient* webdavClient, QString href,
-                       QString creationDate, QString lastModified,
-                       QString displayName, QString contentType,
-                       QString contentLength, bool isCollection) {
+WebDAVItem::WebDAVItem(WebDAV* webdavClient, QString href, QString creationDate,
+                       QString lastModified, QString displayName,
+                       QString contentType, QString contentLength,
+                       bool isCollection) {
   this->webdavClient = webdavClient;
   this->href = href;
   this->creationDate =

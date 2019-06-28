@@ -1,5 +1,5 @@
-#ifndef WEBDAVCLIENT_HPP
-#define WEBDAVCLIENT_HPP
+#ifndef WEBDAV_HPP
+#define WEBDAV_HPP
 
 #include <QIODevice>
 #include <QList>
@@ -14,11 +14,11 @@
 
 enum ListDepthEnum { Zero, One, Two, Infinity };
 
-class WebDAVClient : public QObject {
+class WebDAV : public QObject {
   Q_OBJECT
 
  public:
-  WebDAVClient(QString host, QString username, QString password);
+  WebDAV(QString host, QString username, QString password);
 
   WebDAVReply* listDir(QString path = "/");
   WebDAVReply* listDir(QString path, ListDepthEnum depth);
@@ -37,7 +37,7 @@ class WebDAVClient : public QObject {
 
   WebDAVReply* remove(QString path);
 
-  ~WebDAVClient();
+  ~WebDAV();
 
  private:
   NetworkHelper* networkHelper;

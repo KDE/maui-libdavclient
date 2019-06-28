@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QtXml/QDomDocument>
 
-QList<WebDAVItem> XMLHelper::parseListDirResponse(WebDAVClient *webdavClient,
+QList<WebDAVItem> XMLHelper::parseListDirResponse(WebDAV *webdavClient,
                                                   QByteArray xml) {
   QList<WebDAVItem> items;
   QString webdavNS = "DAV:";

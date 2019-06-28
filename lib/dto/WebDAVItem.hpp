@@ -5,12 +5,12 @@
 #include <QIODevice>
 #include <QString>
 
-class WebDAVClient;
+class WebDAV;
 class WebDAVReply;
 
 class WebDAVItem {
  public:
-  WebDAVItem(WebDAVClient* webdavClient, QString href, QString creationDate,
+  WebDAVItem(WebDAV* webdavClient, QString href, QString creationDate,
              QString lastModified, QString displayName, QString contentType,
              QString contentLength, bool isCollection);
 
@@ -35,7 +35,7 @@ class WebDAVItem {
   int getContentLength();
 
  private:
-  WebDAVClient* webdavClient;
+  WebDAV* webdavClient;
   QString href;
   QDateTime creationDate;
   QString lastModified;
