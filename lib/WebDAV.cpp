@@ -21,6 +21,30 @@ WebDAV::WebDAV(QString host, QString username, QString password) {
   // TODO: Check for Timeout error in case of wrong host
 }
 
+WebDAVReply* WebDAV::testConnection() {
+  QMap<QString, QString> headers;
+  WebDAVReply* reply = new WebDAVReply();
+  QNetworkReply* testConnectionReply =
+      this->networkHelper->makeRequest("PROPFIND", headers);
+
+  connect(testConnectionReply, &QNetworkReply::finished, [=]() {
+    if (testConnectionReply->error()) {
+      reply->sendTestConnectionResponseSignal(false);
+      this->errorReplyHandler(reply, testConnectionReply->error());
+    } else {
+      reply->sendTestConnectionResponseSignal(true);
+    }
+  });
+  connect(testConnectionReply,
+          QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+          [=](QNetworkReply::NetworkError err) {
+            reply->sendTestConnectionResponseSignal(false);
+            this->errorReplyHandler(reply, err);
+          });
+
+  return reply;
+}
+
 WebDAVReply* WebDAV::listDir(QString path) {
   return this->listDir(path, ListDepthEnum::Infinity);
 }

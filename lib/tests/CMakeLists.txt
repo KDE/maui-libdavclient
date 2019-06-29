@@ -15,6 +15,19 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(
   ${PROJECT_NAME}_test
 
+  ../WebDAV.cpp
+  ../CardDAV.cpp
+
+  ../dto/WebDAVItem.cpp
+  ../dto/Contact.cpp
+  ../dto/CardDAVResponseItem.cpp
+
+  ../utils/NetworkHelper.cpp
+  ../utils/WebDAVReply.cpp
+  ../utils/CardDAVReply.cpp
+  ../utils/XMLHelper.cpp
+  ../utils/Environment.cpp
+
   TestLibDAVClient.cpp
 )
 

@@ -5,6 +5,10 @@
 
 #include "WebDAVReply.hpp"
 
+void WebDAVReply::sendTestConnectionResponseSignal(bool isSuccess) {
+  emit testConnectionResponse(isSuccess);
+}
+
 void WebDAVReply::sendListDirResponseSignal(QNetworkReply* listDirReply,
                                             QList<WebDAVItem> items) {
   emit listDirResponse(listDirReply, items);

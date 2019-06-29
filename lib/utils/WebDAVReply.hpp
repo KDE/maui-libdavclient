@@ -12,6 +12,7 @@ class WebDAVReply : public QObject {
   Q_OBJECT
 
  public:
+  void sendTestConnectionResponseSignal(bool isSuccess);
   void sendListDirResponseSignal(QNetworkReply* listDirReply,
                                  QList<WebDAVItem> items);
   void sendDownloadResponseSignal(QNetworkReply* downloadReply);
@@ -25,6 +26,7 @@ class WebDAVReply : public QObject {
   void sendError(QNetworkReply::NetworkError err);
 
  signals:
+  void testConnectionResponse(bool isSuccess);
   void listDirResponse(QNetworkReply* listDirReply, QList<WebDAVItem> items);
   void downloadResponse(QNetworkReply* downloadReply);
   void downloadProgressResponse(qint64 bytesReceived, qint64 bytesTotal);

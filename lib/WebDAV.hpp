@@ -20,6 +20,8 @@ class WebDAV : public QObject {
  public:
   WebDAV(QString host, QString username, QString password);
 
+  WebDAVReply* testConnection();
+
   WebDAVReply* listDir(QString path = "/");
   WebDAVReply* listDir(QString path, ListDepthEnum depth);
 
